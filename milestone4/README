@@ -1,0 +1,20 @@
+"As mentioned in the tutorial content for Milestone 3, your line-following robot should be capable of solving this task with little or no modification. The only necessary change is to determine when the robot reaches the end of the maze. The end is represented by a solid black rectangle (three lines thick) that is more than the width of the robot."
+-- well, on my first attempt something was .. definitely not right with how i drew the end lines 
+- even after redrawing the maze, it fails to stop. i haven't modified the tutorial code yet, i should look at problems within the code for endpoint detection?
+
+
+- The robot just pivots back and forth like it wants to turn at a t-intersection but can't decide and then on occasion if I try to pick it up it starts spinning like crazy.
+- unsure if it's a physical/environment issue, an issue with the robot's sensors, or if it's an software/coding issue
+I've tried:
+- re-uploading the code
+- redrawing the endpoint to be smoother (I originally just made it out of old electrical tape trying to be economical)
+- redrawing the maze to be simpler
+- redrawing a maze in a different area w/ different lighting
+
+eventually josh suggested it was a problem with the code and how the robot detects the endpoint.
+
+documentation of fails:
+- https://drive.google.com/open?id=1ZbRkK8odj2H__jGheADr3NFO96GxClkb
+- https://drive.google.com/open?id=1ZgKpWAeOt6JEZOxvIHJQq10rys5Y-XmI
+- https://drive.google.com/open?id=1ZbVWeFXPNQBDoTPGqEcclDtXoHbJcjmo
+- https://drive.google.com/open?id=1mo98aiF4trQs49aGAR_KeJ-DXzx29wfM

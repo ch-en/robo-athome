@@ -10,10 +10,12 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  // drive for 4 seconds
-  motors.setLeftSpeed(100);
-  motors.setRightSpeed(100);
-  delay(4000); // 4 seconds of delay
+  // update:
+  // drive for 4 seconds on 100 speed only moved ~2 feet, 
+  // so i made it run at 150 speed for 6 seconds
+  motors.setLeftSpeed(150);
+  motors.setRightSpeed(150);
+  delay(6000); // 6 seconds of delay
 
   //stop!
   motors.setLeftSpeed(0);
@@ -22,5 +24,4 @@ void loop() {
   while(true){
   } // so the robot stops after running the loop once!
   
-  }
 }
