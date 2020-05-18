@@ -18,3 +18,39 @@ documentation of fails:
 - https://drive.google.com/open?id=1ZgKpWAeOt6JEZOxvIHJQq10rys5Y-XmI
 - https://drive.google.com/open?id=1ZbVWeFXPNQBDoTPGqEcclDtXoHbJcjmo
 - https://drive.google.com/open?id=1mo98aiF4trQs49aGAR_KeJ-DXzx29wfM
+
+
+so what i did was i looked at the code in later milestones, saw that they used a finish_counter, and i implemented my own small finish counter without the more advanced intersection type detection:
+void loop() {
+  line_position = linesensors.readLine(sensor_vals);
+
+  // endpoint detection is now based on only the 'finish counter' which is incremented at turning points
+  // if the counter increments enough without the robot following a line (meaning it's hit a dead end)
+  // then the robot will stop.
+  if(finish_counter > 6
+  /*sensor_vals[0] > THRESHOLD && sensor_vals[5] > THRESHOLD*/){
+    solved(); 
+  }else if(sensor_vals[0] > THRESHOLD && sensor_vals[1] > THRESHOLD){
+    path[turn_counter] = 'L';
+    turn_counter++;
+    finish_counter++;
+    turn_left();
+  } else if(sensor_vals[4] > THRESHOLD && sensor_vals[5] > THRESHOLD){
+    path[turn_counter] = 'R';
+    turn_counter++;
+    finish_counter++;
+    turn_right();
+  } else {
+    follow_line();
+    finish_counter = 0; // reset finish counter to 0 when we've made a turn and follow a line
+  }
+}
+
+at first i experimented with the finish_counter threshold being 10. this worked but took quite a while so i kept decreasing it, from 6 (which worked pretty good. i noticevd at 6 that one problem with setting it at 10/anything 'too high' might have been that as the robot turned more often, it would naturally back up and cause it to stop detecting the edge of the endpoint, making it have move forward/'follow line' to get to the edge, which would reset the finish count and make it have to start over.) 
+and then i decreased it down to 3 because why not! this one works too.
+it's not the most elegant looking solution at all to have the robot thrash around at the end before detecting it's finished but at least it's working!
+
+video documentation:
+- counter threshold at 10: https://drive.google.com/file/d/1bNXO9eSzmEhRiXwmryMLg_2gSLj55dvb/view?usp=sharing
+- counter threshold at 6: https://drive.google.com/file/d/1bKxzJjeFwLVk8Iz46vZFmwS5GHUh9AeM/view?usp=sharing
+- counter threshold at 3 (final): https://drive.google.com/file/d/1bIUEX9LoeARdeEA49dP5e2JgYn9FeS8s/view?usp=sharing

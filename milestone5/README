@@ -1,0 +1,3 @@
+- upon running the tutorial code the first thing i noticed was the robot stopped completely at all turns.
+- i checked for any code where the robot's speed is set to 0 that might be accidentally called. i tried checking if the robot was finishing, but the buzzer isn't playing so i know that can't be true.
+- i tried changing the speed to be faster (270).
