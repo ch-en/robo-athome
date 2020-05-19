@@ -1,3 +1,37 @@
 - upon running the tutorial code the first thing i noticed was the robot stopped completely at all turns.
+- no buzzer is playing, so that means no turns are detected.
 - i checked for any code where the robot's speed is set to 0 that might be accidentally called. i tried checking if the robot was finishing, but the buzzer isn't playing so i know that can't be true.
-- i tried changing the speed to be faster (270).
+- i tried changing the threshold for detection to 300 instead of 400. that didn't work and i feel silly
+- i'm going to try and see where it stops by putting buzzers at debug points in the code such as at the very beginning of the get_intersection_type function
+
+- i notice that when I have the buzzer play at the very beginning of the get_intersection_type function, it doesn't play while the buzzer from the initial
+if(line_on_left || line_on_right) {
+    in the loop is still playing.
+    . so the function is not being called (which would mean something later on in the function is stalling the robot). i'm having trouble with the detection at all.
+    - 
+
+- when putting a buzzer  at the very beginning of this loop:
+ while(line_on_left || line_on_right){
+    
+      buzzer.play("O6c32d32e32f32g32");
+    linesensors.read(sensor_vals);
+    line_on_left = sensor_vals[0] > THRESHOLD;
+    line_on_right = sensor_vals[5] > THRESHOLD;
+
+    line_on_left_ever = line_on_left || line_on_left_ever;
+    line_on_right_ever = line_on_right || line_on_right_ever;
+
+    finish_counter++;
+    if(finish_counter > 60){
+      buzzer.play("O6c32d32e32f32g32");
+      return FINISH;
+    }
+  }
+- it does not buzz when it should. so this means this while loop is never being entered (i was testing on an intersection at the time)
+- to remedy this i tried having the robot slow down when trying to get intersection types.. but that didn't work because the speed had become 0 anyway (oops) so it didn't affect it.
+
+- next i looked at the turn functions. i went back and compared it to old code to see if anything was vastly different.. it was a little different but i realized the get_intersection_type function wasn't even working
+
+
+
+- I also tried adjusting the threshold to 300 and 450 instead of 400, but it only changes how late or early the robot halts completely (which I understand)

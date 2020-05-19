@@ -22,8 +22,8 @@ void setup() {
 }
 
 unsigned int sensor_vals[6];
-int THRESHOLD = 400;
-int BASE_SPEED = 200;
+int THRESHOLD = 450;
+int BASE_SPEED = 250;
 int line_position;
 char path[50];
 int turn_counter = 0;
@@ -47,10 +47,13 @@ void loop() {
   int intersection_type = NO_INTERSECTION;
   
   if(line_on_left || line_on_right) {
-    motors.setSpeeds(BASE_SPEED, BASE_SPEED);
+    buzzer.playNote(NOTE_C(6), 100, 15);
+    motors.setSpeeds(20, 20); // slow down to detect intersection
     intersection_type = get_intersection_type();
   }
 
+
+    motors.setSpeeds(BASE_SPEED, BASE_SPEED); // return to base speed
   if(intersection_type == NO_INTERSECTION && sensor_vals[1] < THRESHOLD && sensor_vals[2] < THRESHOLD && sensor_vals[3] < THRESHOLD && sensor_vals[4] < THRESHOLD){
     path[turn_counter] = 'U';
     turn_counter++;
@@ -84,6 +87,8 @@ void loop() {
 }
 
 int get_intersection_type() {
+  buzzer.playNote(NOTE_C(6), 100, 15); // have buzzer play at the very beginning of this function 
+  
   bool line_on_left = sensor_vals[0] > THRESHOLD;
   bool line_on_right = sensor_vals[5] > THRESHOLD;
   
@@ -93,6 +98,7 @@ int get_intersection_type() {
   int finish_counter = 0;
   
   while(line_on_left || line_on_right){
+     buzzer.playNote(NOTE_D(6), 100, 15);
     linesensors.read(sensor_vals);
     line_on_left = sensor_vals[0] > THRESHOLD;
     line_on_right = sensor_vals[5] > THRESHOLD;
@@ -102,7 +108,7 @@ int get_intersection_type() {
 
     finish_counter++;
     if(finish_counter > 60){
-      //buzzer.play("O6c32d32e32f32g32");
+      buzzer.play("O6c32d32e32f32g32");
       return FINISH;
     }
   }
@@ -187,6 +193,8 @@ void solved(){
   }
   while(true){
     // do nothing!
+    
+      buzzer.playNote(NOTE_F(6), 100, 15); // set buzzer so we know when finished
   }
 }
 
